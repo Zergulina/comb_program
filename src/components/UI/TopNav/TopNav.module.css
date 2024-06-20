@@ -1,0 +1,10 @@
+.TopNav {
+  width: calc(100% - 50px);
+  height: 35px;
+
+  position: absolute;
+  margin-left: 50px;
+
+  background-color: var(--panel-background-color);
+  border-bottom: solid 0.15vw var(--panel-border-color);
+}
