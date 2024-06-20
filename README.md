@@ -1,7 +1,5 @@
-# Tauri + React
+# сomb_program
 
-This template should help get you started developing with Tauri and React in Vite.
+Specialized database management system for collecting empirical knowledges and using them in input/output parameters representation.
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+Inspired by research in the field of initial setup of **COMB**ine harvesters, where such software was needed for the first time.
