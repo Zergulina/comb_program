@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from './TopNav.module.css'
 
-const TopNav = () => {
+const TopNav = ({children, className}) => {
     return (
-        <div className={classes.TopNav}>
-            
+        <div className={classes.TopNav + " " + className}>
+            {children}
         </div>
     );
 };

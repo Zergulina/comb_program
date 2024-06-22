@@ -1,4 +1,63 @@
-.Icon {
+.TitleBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  user-select: none;
+}
+
+.Maximized {
+  margin-top: -1px;
+}
+
+.Unmaximized {
+  padding: 5px 5px 0 5px;
+}
+
+
+.TitleBar .Left {
+  display: flex;
+  width: 50vw;
+  justify-content: flex-start;
+  background-color: inherit;
+}
+
+.TitleBar .Right {
+  width: 50vw;
+  background-color: inherit;
+
+}
+
+.TitleBar .Icon {
+  height: 35px;
+  width: 45px;
+  padding: 10px;
+  color: var(--titlebar-icon-color);
+  background-color: var(--panel-background-color);
+  z-index: 1000;
+  position: absolute;
+}
+
+.TitleBar .Icon:hover {
+  background-color: var(--titlebar-icon-hover-background-color);
+}
+
+.TitleBar .Icon.Quit:hover {
+  background-color:var(--titlebar-icon-quit-hover-background-color);
+}
+
+.TopNav {
+  position: absolute; 
+  margin-left: 50px;
+  margin-top: 35px; 
+}
+
+.LeftPanel {
+  position: absolute; 
+  margin-top: 35px; 
+}
+
+.LeftPanel .Icon {
   width: 100%;
   height: 34px;
   background-color: var(--panel-background-color);
@@ -7,16 +66,16 @@
 }
 
 .NavIcon {
-  color: var(--text-unactive-color);
+  color: var(--panel-icon-unactive-color);
   background-color: var(--panel-background-color);
 }
 
 .NavIcon:hover {
-  color: var(--text-color);
+  color: var(--panel-icon-color);
 }
 
 .NavIconActive {
-  color: var(--text-color);
+  color: var(--panel-icon-color);
 }
 
 .NavIconActive::before {

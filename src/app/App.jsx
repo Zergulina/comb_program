@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import FileSelection from "./components/pages/FileSelection/FileSelection";
-import OutletPanels from "./modules/OutletPanels/OutletPanels";
-import { useTheme } from "./hooks/useTheme";
+import FileSelection from "../pages/FileSelection/FileSelection";
+import OutletPanels from "../modules/OutletPanels/OutletPanels";
+import { useTheme } from "../hooks/useTheme";
 
 function App() {
   const [appTheme, useAppTheme] = useTheme();

@@ -1,0 +1,11 @@
+.Page {
+    width: calc(100vw - 51px);
+    height: calc(100vh - 71px);
+
+    position: absolute;
+    margin-top: 70px ;
+    margin-left: 50px;
+    
+    border-right: solid 1px var(--panel-border-color);
+    border-bottom: solid 1px var(--panel-border-color);
+}
