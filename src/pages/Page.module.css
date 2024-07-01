@@ -8,4 +8,6 @@
     
     border-right: solid 1px var(--panel-border-color);
     border-bottom: solid 1px var(--panel-border-color);
+
+    color: var(--text-color);
 }
