@@ -1,0 +1,17 @@
+html[data-theme='light'] {
+    --panel-background-color: #f8f8f8;
+    --panel-border-color: #e5e5e5;
+    --panel-icon-color: #1f1f1f;
+    --panel-icon-unactive-color: #5a5a5a;
+
+    --main-background-color: #ffffff;
+
+    --text-color: #3b3b3b;
+    --text-unactive-color: #8e8e90;
+
+    --style-color: blue;
+
+    --titlebar-icon-color: #1e1e1e;
+    --titlebar-icon-hover-background-color: #d7d7d7;
+    --titlebar-icon-quit-hover-background-color: rgb(181, 0, 0);
+}

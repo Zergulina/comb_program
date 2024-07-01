@@ -3,19 +3,19 @@ import { Outlet } from 'react-router';
 import LeftPanel from '../../components/LeftPanel/LeftPanel';
 import TopNav from '../../components/TopNav/TopNav';
 import TitleBar from '../../components/TitleBar/TitleBar';
-import { BsCollectionFill, BsDatabaseFillDown, BsDatabaseFillUp, BsXLg, BsWindowFullscreen, BsWindowStack, BsDashLg } from "react-icons/bs";
+import { BsCollectionFill, BsDatabaseFillDown, BsDatabaseFillUp, BsXLg, BsWindowFullscreen, BsWindowStack, BsDashLg, BsSunFill, BsMoonStarsFill } from "react-icons/bs";
 import classes from './OutletPanels.module.css'
 import { NavLink } from 'react-router-dom';
 import { appWindow } from '@tauri-apps/api/window'
 import { useState } from 'react';
 
-const OutletPanels = () => {
+const OutletPanels = ({ appTheme, useAppTheme }) => {
     const [maximizedFlag, setMaximizedFlag] = useState(false);
 
     useEffect(() => {
         appWindow.isMaximized().then(response => setMaximizedFlag(response));
         const handleResize = () => {
-            appWindow.isMaximized().then(response => {setMaximizedFlag(response); console.log(response);});
+            appWindow.isMaximized().then(response => { setMaximizedFlag(response); console.log(response); });
         }
 
         window.addEventListener('resize', handleResize);
@@ -43,17 +43,28 @@ const OutletPanels = () => {
                 </div>
             </TitleBar>
             <TopNav className={classes.TopNav} />
-            <LeftPanel className={classes.LeftPanel}>
-                <NavLink className={({ isActive }) => classes.NavIcon + " " + (isActive ? classes.NavIconActive : "")} to='/'>
-                    <BsCollectionFill className={classes.Icon} />
-                </NavLink>
-                <NavLink className={({ isActive }) => classes.NavIcon + " " + (isActive ? classes.NavIconActive : "")} to='/import'>
-                    <BsDatabaseFillDown className={classes.Icon} />
-                </NavLink>
-                <NavLink className={({ isActive }) => classes.NavIcon + " " + (isActive ? classes.NavIconActive : "")} to='/export'>
-                    <BsDatabaseFillUp className={classes.Icon} />
-                </NavLink>
-            </LeftPanel>
+            <div className={classes.LeftPanel}>
+                <LeftPanel>
+                    <NavLink className={({ isActive }) => (`${classes.IconContainer}  ${isActive ? classes.NavIconActive : ""}`)} to='/'>
+                        <BsCollectionFill className={classes.Icon} />
+                    </NavLink>
+                    <NavLink className={({ isActive }) => (`${classes.IconContainer}  ${isActive ? classes.NavIconActive : ""}`)} to='/import'>
+                        <BsDatabaseFillDown className={classes.Icon} />
+                    </NavLink>
+                    <NavLink className={({ isActive }) => (`${classes.IconContainer} ${isActive ? classes.NavIconActive : ""}`)} to='/export'>
+                        <BsDatabaseFillUp className={classes.Icon} />
+                    </NavLink>
+                </LeftPanel>
+                <LeftPanel className={classes.LeftPanelBottom}>
+                    <div className={classes.IconContainer}>
+                        {
+                            appTheme == "light" ?
+                                <BsSunFill className={classes.Icon} onClick={() => useAppTheme("dark")} />
+                                : <BsMoonStarsFill className={classes.Icon} onClick={() => useAppTheme("light")} />
+                        }
+                    </div>
+                </LeftPanel>
+            </div>
             <Outlet />
         </div>
     );

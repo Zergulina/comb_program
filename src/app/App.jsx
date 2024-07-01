@@ -9,13 +9,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<OutletPanels />}>
+        <Route path="/" element={<OutletPanels  appTheme={appTheme} useAppTheme={useAppTheme}/>}>
           <Route index element={<FileSelection />} />
         </Route>
-        <Route path="/import" element={<OutletPanels />}>
+        <Route path="/import" element={<OutletPanels appTheme={appTheme} useAppTheme={useAppTheme}/>}>
           <Route index element={<FileSelection />} />
         </Route>
-        <Route path="/export" element={<OutletPanels />}>
+        <Route path="/export" element={<OutletPanels appTheme={appTheme} useAppTheme={useAppTheme}/>}>
           <Route index element={<FileSelection />} />
         </Route>
       </Routes>
