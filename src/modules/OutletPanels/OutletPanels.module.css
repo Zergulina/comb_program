@@ -75,7 +75,7 @@
 }
 
 .NavIconActive {
-  color: var(--panel-icon-color);
+  color: var(--panel-icon-color) !important; 
 }
 
 .NavIconActive::before {
