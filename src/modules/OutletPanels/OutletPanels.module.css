@@ -90,4 +90,5 @@
 .LeftPanelBottom {
   flex-direction: column-reverse;
   padding-bottom: 1;
+  border-bottom: solid 1px var(--panel-border-color);
 }
