@@ -527,14 +527,14 @@ fn get_output_values_by_output_parameter_id(
 
 #[tauri::command]
 fn get_output_value_by_id(
-    input_value_id: i64,
+    input_value_ids_hash: i64,
     output_parameter_id: i64,
     connection_string: tauri::State<DbConnection>,
 ) -> Result<OutputValue, String> {
     dbcontext::init(connection_string.0.as_str());
 
     if let Ok(output_value) =
-        repositories::output_value_repository::get_by_id(input_value_id, output_parameter_id, connection_string.0.as_str())
+        repositories::output_value_repository::get_by_id(input_value_ids_hash, output_parameter_id, connection_string.0.as_str())
     {
         return Ok(output_value);
     }
@@ -544,14 +544,14 @@ fn get_output_value_by_id(
 
 #[tauri::command]
 fn create_output_value(
-    input_value_id: i64,
+    input_value_ids_hash: i64,
     output_parameter_id: i64,
     output_value_dto: CreateOutputValueRequestDto,
     connection_string: tauri::State<DbConnection>,
 ) -> Result<OutputValue, String> {
     dbcontext::init(connection_string.0.as_str());
 
-    let mut output_value = to_output_value_from_create_dto(input_value_id, output_parameter_id, output_value_dto);
+    let mut output_value = to_output_value_from_create_dto(input_value_ids_hash, output_parameter_id, output_value_dto);
     if let Err(_) =
         repositories::output_value_repository::create(&mut output_value, connection_string.0.as_str())
     {
@@ -563,7 +563,7 @@ fn create_output_value(
 
 #[tauri::command]
 fn update_output_value(
-    input_value_id: i64,
+    input_value_ids_hash: i64,
     output_parameter_id: i64,
     output_value_dto: UpdateInputValueRequestDto,
     connection_string: tauri::State<DbConnection>,
@@ -571,7 +571,7 @@ fn update_output_value(
     dbcontext::init(connection_string.0.as_str());
 
     if let Ok(flag) = repositories::input_value_repository::exists(
-        input_value_id,
+        input_value_ids_hash,
         connection_string.0.as_str(),
     ) {
         if !flag {
@@ -593,7 +593,7 @@ fn update_output_value(
     }
 
     if let Ok(mut output_value) =
-        repositories::output_value_repository::get_by_id(input_value_id, output_parameter_id, connection_string.0.as_str())
+        repositories::output_value_repository::get_by_id(input_value_ids_hash, output_parameter_id, connection_string.0.as_str())
     {
         output_value.value = output_value_dto.value;
 
@@ -609,14 +609,14 @@ fn update_output_value(
 
 #[tauri::command]
 fn delete_output_value(
-    input_value_id: i64,
+    input_value_ids_hash: i64,
     output_parameter_id: i64,
     connection_string: tauri::State<DbConnection>,
 ) -> Result<(), String> {
     dbcontext::init(connection_string.0.as_str());
 
     if let Err(_) =
-        repositories::output_value_repository::remove_by_id(input_value_id, output_parameter_id, connection_string.0.as_str())
+        repositories::output_value_repository::remove_by_id(input_value_ids_hash, output_parameter_id, connection_string.0.as_str())
     {
         return Err("Ошибка удаления".to_string());
     }

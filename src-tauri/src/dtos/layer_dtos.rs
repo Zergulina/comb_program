@@ -1,6 +1,6 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 pub struct CreateLayerRequestDto {
     pub prev_layer_id: Option<i64>,
     pub is_final: bool,

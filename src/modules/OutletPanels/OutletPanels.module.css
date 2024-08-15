@@ -74,6 +74,10 @@
   color: var(--panel-icon-color);
 }
 
+.LeftPanel .IconContainer:focus {
+  outline: none; /*TODO*/
+}
+ 
 .NavIconActive {
   color: var(--panel-icon-color) !important; 
 }

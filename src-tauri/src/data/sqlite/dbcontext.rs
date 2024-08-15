@@ -11,6 +11,7 @@ pub fn init(connection_str: &str) {
             name TEXT NOT NULL,
             description TEXT,
             image BLOB,
+            image_format TEXT
         )",
         rusqlite::params![],
     )
@@ -48,9 +49,10 @@ pub fn init(connection_str: &str) {
 
     conn.execute(
         "CREATE TABLE IF NOT EXISTS output_value (
-            input_parameter_id INTEGER NOT NULL PRIMARY KEY REFERENCES input_parameter(id) ON DELETE CASCADE,
-            output_parameter_id INTEGER NOT NULL PRIMARY KEY REFERENCES output_parameter(id) ON DELETE CASCADE,
-            value TEXT
+            input_value_ids_hash INTEGER NOT NULL REFERENCES input_value(id) ON DELETE CASCADE,
+            output_parameter_id INTEGER NOT NULL REFERENCES output_parameter(id) ON DELETE CASCADE,
+            value TEXT,
+            PRIMARY KEY(input_value_ids_hash, output_parameter_id)
         )",
         rusqlite::params![],
     )

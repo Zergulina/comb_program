@@ -26,6 +26,12 @@
         "unmaximize": true,
         "unminimize": true,
         "startDragging": true
+      },
+      "dialog": {
+        "open": true
+      },
+      "fs": {
+        "readFile": true
       }
     },
     "windows": [
@@ -34,6 +40,8 @@
         "fullscreen": false,
         "resizable": true,
         "title": "comb_program",
+        "minWidth": 800,
+        "minHeight": 600,
         "width": 800,
         "height": 600
       }

@@ -9,6 +9,10 @@ html[data-theme='dark'] {
     --text-color: rgb(211, 211, 211);
     --text-unactive-color: rgb(146, 146, 146);
 
+    --button-color: rgb(53, 53, 53);
+    --button-hover-color: rgb(42, 42, 42);
+    --button-focus-shadow-color: rgb(69, 69, 69);
+
     --style-color: green;
 
     --titlebar-icon-color: rgb(211, 211, 211);

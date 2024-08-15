@@ -1,0 +1,13 @@
+.LayerCard {
+    background-color: var(--panel-background-color);
+    border: solid 1px var(--panel-background-color);
+    height: 100px;
+    width: 100%;
+}
+
+.ImageContainer {
+    top: 10px;
+    left: 10px;
+    width: 144px;
+    height: 81px;
+}

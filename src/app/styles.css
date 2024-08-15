@@ -6,4 +6,8 @@
 
   overflow-y: hidden;
   overflow-x: hidden;
+
+  user-select: none;
+
+  font-family: Arial, Helvetica, sans-serif;
 }

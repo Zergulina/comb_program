@@ -1,8 +1,8 @@
 .Page {
-    width: calc(100vw - 51px);
-    height: calc(100vh - 71px);
+    width: calc(100vw - 50px);
+    height: calc(100vh - 70px);
 
-    position: absolute;
+    position: relative;
     margin-top: 70px ;
     margin-left: 50px;
     
