@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, redirect } from 'react-router';
 import LeftPanel from './components/LeftPanel/LeftPanel';
 import TopNav from './components/TopNav/TopNav';
 import TitleBar from './components/TitleBar/TitleBar';
@@ -9,10 +9,14 @@ import { NavLink } from 'react-router-dom';
 import { appWindow } from '@tauri-apps/api/window'
 import { useState } from 'react';
 import { useTheme } from './hooks/useTheme';
+import { goToLayer } from '../../store/layerPath/slice';
+import { useDispatch } from 'react-redux';
 
 const OutletPanels = () => {
     const [maximizedFlag, setMaximizedFlag] = useState(false);
     const [appTheme, useAppTheme] = useTheme();
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         appWindow.isMaximized().then(response => setMaximizedFlag(response));
@@ -47,7 +51,7 @@ const OutletPanels = () => {
             <TopNav className={classes.TopNav} />
             <div className={classes.LeftPanel}>
                 <LeftPanel>
-                    <NavLink className={({ isActive }) => (`${classes.IconContainer}  ${isActive ? classes.NavIconActive : ""}`)} to='/'>
+                    <NavLink className={({ isActive }) => (`${classes.IconContainer}  ${isActive ? classes.NavIconActive : ""}`)} to='/' onClick={()=>dispatch(goToLayer(-1))}>
                         <BsCollectionFill className={classes.Icon} />
                     </NavLink>
                     {/* <NavLink className={({ isActive }) => (`${classes.IconContainer}  ${isActive ? classes.NavIconActive : ""}`)} to='/graph'>

@@ -1,9 +1,8 @@
 import { invoke } from "@tauri-apps/api";
-import { addLayer } from "../../../store/layers/slice";
+import { updateLayer } from "../../../store/layers/slice";
 
-export const createNewLayer = (
-  prevLayerId,
-  isFinal,
+export const updateLayerApi = (
+  id,
   layerName,
   layerDescription,
   uintArrayImage,
@@ -11,19 +10,15 @@ export const createNewLayer = (
   dispatch
 ) => {
   const layerDto = {
-    prev_layer_id: prevLayerId,
-    is_final: isFinal,
     name: layerName,
     description: layerDescription,
     image: Array.from(uintArrayImage),
     image_format: imageFormat,
   };
 
-  return invoke("create_layer", {
-    layerDto: layerDto,
-  })
+  invoke("update_layer", { id: id, layerDto: layerDto })
     .then((result) => {
-      dispatch(addLayer(result));
+      dispatch(updateLayer(result));
     })
     .catch((errorMessage) => {
       console.error(errorMessage);

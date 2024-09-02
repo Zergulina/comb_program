@@ -1,0 +1,18 @@
+.LayerList {
+    overflow-y: auto;
+}
+
+.LayerList::-webkit-scrollbar {
+    background-color: var(--button-color);
+    border-radius: 4px;
+    width: 10px;
+}
+
+.LayerList::-webkit-scrollbar-thumb{
+    background-color: var(--button-focus-shadow-color);
+    border-radius: 4px;
+}
+
+.LayerListUnit:not(:first-child){
+    margin-top: 10px;
+}

@@ -1,16 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import FileSelection from "../pages/FileSelection/FileSelection";
+import LayerSelection from "../pages/LayerSelection/LayerSelection";
 import OutletPanels from "../modules/OutletPanels/OutletPanels";
+import LayerElement from "../pages/LayerElement/LayerElement";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<OutletPanels/>}>
-          <Route index element={<FileSelection />} />
+          <Route index element={<LayerSelection />} />
         </Route>
-        <Route path="/graph" element={<OutletPanels/>}>
-          <Route index element={<FileSelection />} />
+        <Route path="/element" element={<OutletPanels/>}>
+          <Route index element={<LayerElement />} />
         </Route>
       </Routes>
     </BrowserRouter>

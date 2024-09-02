@@ -8,12 +8,19 @@ import InputText from '../../../../UI/InputText/InputText'
 import { readBinaryFile } from '@tauri-apps/api/fs';
 import TextArea from '../../../../UI/TextArea/TextArea';
 import { createNewLayer } from '../../api/createNewLayer';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getPrevLayerId } from '../../../../store/selectors';
 
 const NewModal = ({ isShown, closeCallback }) => {
     const [layerName, setLayerName] = useState("");
     const [layerDescription, setLayerDescription] = useState("");
     const [uintArrayImage, setUintArrayImage] = useState([]);
     const [imageFormat, setImageFormat] = useState("");
+
+    const prevLayerId = useSelector(getPrevLayerId);
+
+    const dispatch = useDispatch();
 
     const getImage = async () => {
         try {
@@ -34,8 +41,6 @@ const NewModal = ({ isShown, closeCallback }) => {
         catch {
             return;
         }
-
-
     }
 
     return (
@@ -46,12 +51,12 @@ const NewModal = ({ isShown, closeCallback }) => {
             <TextArea placeholder={"Описание"} value={layerDescription} setValue={setLayerDescription} className={classes.TextAreaDescription} />
             <div className={classes.ButtonContainer}>
                 <Button className={classes.Button}
-                    onClick={() => createNewLayer(null, false, layerName, layerDescription, Array.from(uintArrayImage), imageFormat)}
+                    onClick={() => createNewLayer(prevLayerId, false, layerName, layerDescription, uintArrayImage, imageFormat, dispatch)}
                 >
                     Добавить слой
                 </Button>
                 <Button className={classes.Button}
-                    onClick={() => createNewLayer(null, true, layerName, layerDescription, Array.from(uintArrayImage), imageFormat)}
+                    onClick={() => createNewLayer(prevLayerId, true, layerName, layerDescription, uintArrayImage, imageFormat, dispatch)}
                 >
                     Добавить элемент
                 </Button>

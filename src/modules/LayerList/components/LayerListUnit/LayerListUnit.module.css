@@ -1,0 +1,77 @@
+.LayerListUnit {
+    padding: 15px;
+    height: 230px;
+    background-color: var(--panel-background-color);
+    border-radius: 4px;
+    position: relative;
+}
+
+
+.ImageContainer {
+    width: 267px;
+    height: 200px;
+}
+
+.ImageContainer:hover {
+    cursor: pointer;
+}
+
+.IsFinalStatus {
+    position: absolute;
+    top: 15px;
+    left: 320px;
+}
+
+.LayerTitle {
+    position: absolute;
+    top: 55px;
+    left: 325px;
+    font-size: 1.3rem;
+    background-color: var(--panel-background-color);
+}
+
+.TextArea {
+    position: absolute;
+    top: 90px;
+    left: 325px;
+    height: 125px;
+    width: calc(100% - 340px);
+}
+
+.EditWrapper {
+    position: absolute;
+    top: 15px;
+    right:50px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--panel-icon-unactive-color);
+    background-color: var(--panel-background-color);
+}
+
+.EditWrapper:hover {
+    color: var(--panel-icon-color) !important;
+}
+
+.Edit {
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+}
+
+.Cross {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    color: var(--panel-icon-unactive-color);
+    background-color: var(--panel-background-color);
+    z-index: 2;
+}
+
+.Cross:hover {
+    color: var(--panel-icon-color) !important;
+}

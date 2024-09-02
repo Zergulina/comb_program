@@ -10,7 +10,7 @@ use comb_program::{
         input_parameter_dtos::{CreateInputParameterRequestDto, UpdateInputParameterRequestDto},
         input_value_dtos::{CreateInputValueRequestDto, UpdateInputValueRequestDto},
         layer_dtos::{
-            CreateLayerRequestDto, UpdateLayerImageRequestDto, UpdateLayerInfoRequestDto,
+            CreateLayerRequestDto, UpdateLayerRequestDto,
         }, output_parameter_dtos::{CreateOutputParameterRequestDto, UpdateOutputParameterRequestDto}, output_value_dtos::CreateOutputValueRequestDto,
     },
     mappers::{
@@ -68,53 +68,18 @@ fn create_layer(
 }
 
 #[tauri::command]
-fn update_layer_info(
+fn update_layer(
     id: i64,
-    layer_dto: UpdateLayerInfoRequestDto,
+    layer_dto: UpdateLayerRequestDto,
     connection_string: tauri::State<DbConnection>,
 ) -> Result<Layer, String> {
     dbcontext::init(connection_string.0.as_str());
 
-    if let Some(prev_layer_id) = layer_dto.prev_layer_id {
-        if let Ok(flag) =
-            repositories::layer_repository::exists(prev_layer_id, connection_string.0.as_str())
-        {
-            if !flag {
-                return Err("Предыдущий слой не существует".to_string());
-            }
-        } else {
-            return Err("Ошибка получения данных".to_string());
-        }
-    }
-
     if let Ok(mut layer) =
         repositories::layer_repository::get_by_id(id, connection_string.0.as_str())
     {
-        layer.prev_layer_id = layer_dto.prev_layer_id;
-        layer.is_final = layer_dto.is_final;
         layer.name = layer_dto.name;
         layer.description = layer_dto.description;
-
-        if let Ok(_) = repositories::layer_repository::update(&layer, connection_string.0.as_str())
-        {
-            return Ok(layer);
-        }
-    }
-
-    return Err("Ошибка получения данных".to_string());
-}
-
-#[tauri::command]
-fn update_layer_image(
-    id: i64,
-    layer_dto: UpdateLayerImageRequestDto,
-    connection_string: tauri::State<DbConnection>,
-) -> Result<Layer, String> {
-    dbcontext::init(connection_string.0.as_str());
-
-    if let Ok(mut layer) =
-        repositories::layer_repository::get_by_id(id, connection_string.0.as_str())
-    {
         layer.image = layer_dto.image;
         layer.image_format = layer_dto.image_format;
 
@@ -638,8 +603,7 @@ fn main() {
             get_layers_by_prev_id,
             get_layer_by_id,
             create_layer,
-            update_layer_info,
-            update_layer_image,
+            update_layer,
             delete_layer,
             get_input_parameters_by_layer_id,
             get_input_parameter_by_id,

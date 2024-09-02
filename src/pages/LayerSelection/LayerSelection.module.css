@@ -1,0 +1,12 @@
+.DataBaseControlPanel {
+    width: 110px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+}
+
+.LayerList {
+    height: 100%;
+    margin-right: 110px;
+    padding: 10px;
+}

@@ -1,0 +1,35 @@
+.Modal {
+    width: 500px;
+    height: 150px;
+}
+
+.TextWrapper {
+    left: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.Text {
+    margin: auto;
+    position:unset;
+    display: block;
+}
+
+.Button {
+    padding: 0 10px;
+}
+
+.ButtonContainer {
+    position: absolute;
+    left: 0;
+    top: 105px;
+    height: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}
