@@ -71,7 +71,7 @@ pub fn remove_by_id(id: i64, connection_str: &str) -> rusqlite::Result<()> {
 
 pub fn exists(id: i64, connection_str: &str) -> rusqlite::Result<bool> {
     let conn = Connection::open(connection_str).unwrap();
-    let mut stmt = conn.prepare("SELECT EXISTS(SELECT 1 FROM input_parameter WHERE id = ?1)")?;
+    let mut stmt = conn.prepare("SELECT EXISTS(SELECT 1 FROM input_parameter WHERE id = ?)")?;
     let exists: bool = stmt.query_row(params![id], |row| row.get(0))?;
     Ok(exists)
 }

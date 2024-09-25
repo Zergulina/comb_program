@@ -6,7 +6,6 @@
     position: relative;
 }
 
-
 .ImageContainer {
     width: 267px;
     height: 200px;
@@ -53,12 +52,12 @@
 
 .EditWrapper:hover {
     color: var(--panel-icon-color) !important;
+    cursor: pointer;
 }
 
 .Edit {
     width: 20px;
     height: 20px;
-    z-index: 2;
 }
 
 .Cross {
@@ -69,9 +68,9 @@
     height: 30px;
     color: var(--panel-icon-unactive-color);
     background-color: var(--panel-background-color);
-    z-index: 2;
 }
 
 .Cross:hover {
     color: var(--panel-icon-color) !important;
+    cursor: pointer;
 }

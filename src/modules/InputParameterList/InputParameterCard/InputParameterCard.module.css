@@ -1,0 +1,14 @@
+.InputParameterName {
+    width: calc(100% - 120px);
+}
+
+.AddInputValueButton {
+    position: absolute;
+    padding: 0 10px;
+    bottom: 15px;
+    left: 15px
+}
+
+.InputValueList {
+    padding: 10px 0 45px 40px;
+}

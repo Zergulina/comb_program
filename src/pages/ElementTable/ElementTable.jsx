@@ -1,6 +1,6 @@
 import pageClasses from '../Page.module.css'
 
-const LayerElement = () => {
+const ElementTable = () => {
     return (
         <div className={pageClasses.Page}>
             
@@ -8,4 +8,4 @@ const LayerElement = () => {
     );
 };
 
-export default LayerElement;
+export default ElementTable;

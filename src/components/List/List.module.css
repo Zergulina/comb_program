@@ -1,18 +1,18 @@
-.LayerList {
+.List {
     overflow-y: auto;
 }
 
-.LayerList::-webkit-scrollbar {
+.List::-webkit-scrollbar {
     background-color: var(--button-color);
     border-radius: 4px;
     width: 10px;
 }
 
-.LayerList::-webkit-scrollbar-thumb{
+.List::-webkit-scrollbar-thumb{
     background-color: var(--button-focus-shadow-color);
     border-radius: 4px;
 }
 
-.LayerListUnit:not(:first-child){
+.List > *:not(:first-child) {
     margin-top: 10px;
 }

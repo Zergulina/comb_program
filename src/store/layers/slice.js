@@ -9,7 +9,7 @@ const layersSlice = createSlice({
     },
     deleteLayerById: (state, action) => {
       const layerId = action.payload;
-      return [...state.filter((layer) => layer.id != layerId)];
+      return state.filter((layer) => layer.id != layerId);
     },
     updateLayer: (state, action) => {
       return state.map((layer) =>

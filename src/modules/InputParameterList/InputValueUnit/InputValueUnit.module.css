@@ -1,0 +1,22 @@
+.InputValueUnit {
+    background-color: inherit;
+}
+
+.InputValueName {
+    width: calc(100% - 80px);
+}
+
+.Cross {
+    width: 30px;
+    height: 30px;
+    background-color: inherit;
+    color: var(--panel-icon-unactive-color);
+    background-color: var(--panel-background-color);
+    position: absolute;
+    right: 40px;
+}
+
+.Cross:hover {
+    color: var(--panel-icon-color) !important;
+    cursor: pointer;
+}

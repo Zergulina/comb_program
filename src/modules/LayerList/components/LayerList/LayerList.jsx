@@ -1,15 +1,15 @@
 import LayerListUnit from "../LayerListUnit/LayerListUnit";
 import { useDispatch, useSelector } from "react-redux";
-import classes from "./LayerList.Module.css";
+// import classes from "./LayerList.Module.css";
 import { useEffect } from "react";
 import { getPrevLayerId } from "../../../../store/selectors";
 import { getLayersByPrevLayerIdApi } from "../../api/getLayersByPrevLayerIdApi";
+import List from "../../../../components/List/List"
 
 
 const LayerList = ({ className }) => {
     const prevLayerId = useSelector(getPrevLayerId);
     const layers = useSelector(state => state.layers);
-    const layerPath = useSelector(state => state.layerPath);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const LayerList = ({ className }) => {
     }, [prevLayerId])
 
     return (
-        <div className={`${classes.LayerList} ${className}`}>
+        <List className={className}>
             {
                 layers.map(layer =>
                     <LayerListUnit
@@ -27,12 +27,12 @@ const LayerList = ({ className }) => {
                         layerDescription={layer.description}
                         uintArrayImage={new Uint8Array(layer.image)}
                         imageFormat={layer.image_format}
-                        id = {layer.id}
-                        className={classes.LayerListUnit}
+                        id={layer.id}
+                        // className={classes.LayerListUnit}
                     />
                 )
             }
-        </div>
+        </List>
     );
 };
 

@@ -1,0 +1,22 @@
+.Card {
+    padding: 15px;
+    min-height: 130px;
+    background-color: var(--panel-background-color);
+    border-radius: 4px;
+    position: relative;
+}
+
+.Cross {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    color: var(--panel-icon-unactive-color);
+    background-color: var(--panel-background-color);
+}
+
+.Cross:hover {
+    color: var(--panel-icon-color) !important;
+    cursor: pointer;
+}
