@@ -2,6 +2,7 @@ import classes from "./LayerElementNav.module.css"
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { BsJournalText, BsTable, BsBoxArrowInRight, BsBoxArrowLeft, BsPlusCircle } from "react-icons/bs";
 import { createInputParameterApi } from "../../api/createInputParameterApi";
+import { createOutputParameterApi } from "../../api/createOutputParameterApi";
 import { useDispatch, useSelector } from "react-redux";
 import { getPrevLayerId } from "../../../../store/selectors";
 
@@ -14,6 +15,10 @@ const LayerElementNav = () => {
 
     const createInputParameter = () => {
         createInputParameterApi("Новый параметр", layerId, dispatch);
+    }
+
+    const createOutputParameter = () => {
+        createOutputParameterApi("Новый параметр", layerId, dispatch);
     }
 
     return (
@@ -33,7 +38,7 @@ const LayerElementNav = () => {
                 </NavLink>
                 <div className={`${classes.IconContainer} ${classes.AddButton}`}
                     style={["/element/input-parameters", "/element/output-parameters"].includes(location.pathname) ? {} : { display: "none" }} 
-                    onClick={location.pathname == "/element/input-parameters" ? createInputParameter : null}
+                    onClick={location.pathname == "/element/input-parameters" ? createInputParameter : location.pathname == "/element/output-parameters" ? createOutputParameter : null}
                 >
                     <BsPlusCircle className={classes.Icon} />
                 </div>

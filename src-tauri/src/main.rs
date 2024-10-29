@@ -11,7 +11,7 @@ use comb_program::{
         input_value_dtos::{CreateInputValueRequestDto, UpdateInputValueRequestDto},
         layer_dtos::{
             CreateLayerRequestDto, UpdateLayerRequestDto,
-        }, output_parameter_dtos::{CreateOutputParameterRequestDto, UpdateOutputParameterRequestDto}, output_value_dtos::CreateOutputValueRequestDto,
+        }, output_parameter_dtos::{CreateOutputParameterRequestDto, UpdateOutputParameterRequestDto}, output_value_dtos::{CreateOutputValueRequestDto, UpdateOutputValueRequestDto},
     },
     mappers::{
         input_parameter_mappers::to_input_parameter_from_create_dto,
@@ -462,8 +462,9 @@ fn delete_output_parameter(
 }
 
 #[tauri::command]
-fn get_output_values_by_output_parameter_id(
+fn get_output_values(
     output_parameter_id: i64,
+    input_values_ids : Vec<i64>,
     connection_string: tauri::State<DbConnection>,
 ) -> Result<Vec<OutputValue>, String> {
     dbcontext::init(connection_string.0.as_str());
@@ -479,6 +480,19 @@ fn get_output_values_by_output_parameter_id(
         return Err("Ошибка получения данных".to_string());
     }
 
+    for input_value_id in input_values_ids {
+        if let Ok(flag) = repositories::input_value_repository::exists(
+            input_value_id,
+            connection_string.0.as_str(),
+        ) {
+            if !flag {
+                return Err("Входное значение не существует".to_string());
+            }
+        } else {
+            return Err("Ошибка получения данных".to_string());
+        }
+    }
+
     if let Ok(input_values) =
         repositories::output_value_repository::get_all(connection_string.0.as_str())
     {
@@ -491,32 +505,14 @@ fn get_output_values_by_output_parameter_id(
 }
 
 #[tauri::command]
-fn get_output_value_by_id(
-    input_value_ids_hash: i64,
-    output_parameter_id: i64,
-    connection_string: tauri::State<DbConnection>,
-) -> Result<OutputValue, String> {
-    dbcontext::init(connection_string.0.as_str());
-
-    if let Ok(output_value) =
-        repositories::output_value_repository::get_by_id(input_value_ids_hash, output_parameter_id, connection_string.0.as_str())
-    {
-        return Ok(output_value);
-    }
-
-    Err("Ошибка получения данных".to_string())
-}
-
-#[tauri::command]
 fn create_output_value(
-    input_value_ids_hash: i64,
     output_parameter_id: i64,
     output_value_dto: CreateOutputValueRequestDto,
     connection_string: tauri::State<DbConnection>,
 ) -> Result<OutputValue, String> {
     dbcontext::init(connection_string.0.as_str());
 
-    let mut output_value = to_output_value_from_create_dto(input_value_ids_hash, output_parameter_id, output_value_dto);
+    let mut output_value = to_output_value_from_create_dto(output_parameter_id, output_value_dto);
     if let Err(_) =
         repositories::output_value_repository::create(&mut output_value, connection_string.0.as_str())
     {
@@ -528,37 +524,14 @@ fn create_output_value(
 
 #[tauri::command]
 fn update_output_value(
-    input_value_ids_hash: i64,
-    output_parameter_id: i64,
-    output_value_dto: UpdateInputValueRequestDto,
+    id: i64,
+    output_value_dto: UpdateOutputValueRequestDto,
     connection_string: tauri::State<DbConnection>,
 ) -> Result<OutputValue, String> {
     dbcontext::init(connection_string.0.as_str());
 
-    if let Ok(flag) = repositories::input_value_repository::exists(
-        input_value_ids_hash,
-        connection_string.0.as_str(),
-    ) {
-        if !flag {
-            return Err("Входного значения не существует".to_string());
-        }
-    } else {
-        return Err("Ошибка получения данных".to_string());
-    }
-
-    if let Ok(flag) = repositories::output_parameter_repository::exists(
-        output_parameter_id,
-        connection_string.0.as_str(),
-    ) {
-        if !flag {
-            return Err("Выходного параметра не существует".to_string());
-        }
-    } else {
-        return Err("Ошибка получения данных".to_string());
-    }
-
     if let Ok(mut output_value) =
-        repositories::output_value_repository::get_by_id(input_value_ids_hash, output_parameter_id, connection_string.0.as_str())
+        repositories::output_value_repository::get_by_id(id, connection_string.0.as_str())
     {
         output_value.value = output_value_dto.value;
 
@@ -574,14 +547,13 @@ fn update_output_value(
 
 #[tauri::command]
 fn delete_output_value(
-    input_value_ids_hash: i64,
-    output_parameter_id: i64,
+    output_value_id: i64,
     connection_string: tauri::State<DbConnection>,
 ) -> Result<(), String> {
     dbcontext::init(connection_string.0.as_str());
 
     if let Err(_) =
-        repositories::output_value_repository::remove_by_id(input_value_ids_hash, output_parameter_id, connection_string.0.as_str())
+        repositories::output_value_repository::remove_by_id(output_value_id, connection_string.0.as_str())
     {
         return Err("Ошибка удаления".to_string());
     }
@@ -620,8 +592,7 @@ fn main() {
             create_output_parameter,
             update_output_parameter,
             delete_output_parameter,
-            get_output_values_by_output_parameter_id,
-            get_output_value_by_id,
+            get_output_values,
             create_output_value,
             update_output_value,
             delete_output_value,

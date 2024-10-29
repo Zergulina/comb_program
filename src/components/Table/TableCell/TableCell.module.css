@@ -1,0 +1,12 @@
+.TableCell {
+    background-color: var(--button-color);
+    color: var(--text-color);
+    appearance: none;
+    font-size: 10px;
+    width:200px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid black;
+    outline: none;
+    box-shadow: none;
+}

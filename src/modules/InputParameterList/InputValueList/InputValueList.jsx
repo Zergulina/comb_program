@@ -16,7 +16,7 @@ const InputValueList = ({ inputParameterId, className }) => {
         <List className={`${classes.InputValueList} ${className}`}>
             {
                 inputValues.map(value => 
-                    <InputValueUnit name={value.name} setName = {(newValue) => updateInputValue(value.id, newValue, inputParameterId, dispatch)}id={value.id} key={value.id}/>
+                    <InputValueUnit name={value.value} setName = {(newValue) => updateInputValue(value.id, newValue, inputParameterId, dispatch)} id={value.id} key={value.id}/>
                 )
             }
         </List>

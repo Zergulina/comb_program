@@ -49,10 +49,19 @@ pub fn init(connection_str: &str) {
 
     conn.execute(
         "CREATE TABLE IF NOT EXISTS output_value (
-            input_value_ids_hash INTEGER NOT NULL REFERENCES input_value(id) ON DELETE CASCADE,
+            id INTEGER PRIMARY KEY,
             output_parameter_id INTEGER NOT NULL REFERENCES output_parameter(id) ON DELETE CASCADE,
-            value TEXT,
-            PRIMARY KEY(input_value_ids_hash, output_parameter_id)
+            value TEXT
+        )",
+        rusqlite::params![],
+    )
+    .unwrap();
+    
+    conn.execute(
+        "CREATE TABLE IF NOT EXISTS input_output_value (
+            input_value_id INTEGER NOT NULL REFERENCES output_parameter(id) ON DELETE CASCADE,
+            output_value_id INTEGER NOT NULL REFERENCES output_parameter(id) ON DELETE CASCADE,
+            PRIMARY KEY (input_value_id, output_value_id)
         )",
         rusqlite::params![],
     )

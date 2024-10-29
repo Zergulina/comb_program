@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPrevLayerId } from "../../../store/selectors";
 import { getInputParametersByLayerId } from "../api/inputParameter/getInputParametersByLayerIdApi";
 import { updateInputParameter } from "../api/inputParameter/updateInputParameterApi";
+import { getInputValuesByInputParameterIds } from "../api/InputValue/getInputValuesByInputParameterIdsApi";
 
 const InputParameterList = ({className}) => {
     const dispatch = useDispatch();
