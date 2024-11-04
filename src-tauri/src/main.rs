@@ -10,13 +10,13 @@ use comb_program::{
         input_parameter_dtos::{CreateInputParameterRequestDto, UpdateInputParameterRequestDto},
         input_value_dtos::{CreateInputValueRequestDto, UpdateInputValueRequestDto},
         layer_dtos::{
-            CreateLayerRequestDto, UpdateLayerRequestDto,
-        }, output_parameter_dtos::{CreateOutputParameterRequestDto, UpdateOutputParameterRequestDto}, output_value_dtos::{CreateOutputValueRequestDto, UpdateOutputValueRequestDto},
+            CreateLayerRequestDto, FullLayerDto, UpdateLayerRequestDto
+        }, output_parameter_dtos::{CreateOutputParameterRequestDto, UpdateOutputParameterRequestDto}, output_value_dtos::UpdateOutputValueRequestDto,
     },
     mappers::{
         input_parameter_mappers::to_input_parameter_from_create_dto,
         input_value_mappers::to_input_value_from_create_dto,
-        layer_mappers::to_layer_from_create_dto, output_parameter_mappers::to_output_parameter_from_create_dto, output_value_mappers::to_output_value_from_create_dto,
+        layer_mappers::to_layer_from_create_dto, output_parameter_mappers::to_output_parameter_from_create_dto,
     },
     models::{InputParameter, InputValue, Layer, OutputParameter, OutputValue},
 };
@@ -39,16 +39,31 @@ fn get_layers_by_prev_id(
     Err("Ошибка получения данных".to_string())
 }
 
-#[tauri::command]
+#[tauri::command] 
 fn get_layer_by_id(
     id: i64,
     connection_string: tauri::State<DbConnection>,
-) -> Result<Layer, String> {
+) -> Result<FullLayerDto, String> {
     dbcontext::init(connection_string.0.as_str());
 
-    if let Ok(layer) = repositories::layer_repository::get_by_id(id, connection_string.0.as_str()) {
-        return Ok(layer);
+    let input_parameters = get_input_parameters_by_layer_id(id, connection_string.clone())?;
+    let mut input_values = Vec::<InputValue>::new();
+    for input_parameter in input_parameters.iter() {
+        input_values.append( &mut get_input_values_by_input_parameter_id(input_parameter.id, connection_string.clone())?);
     }
+
+    let output_parameters = get_output_parameters_by_layer_id(id, connection_string.clone())?;
+    if let Ok(output_values) = repositories::output_value_repository::get_by_layer_id(id, connection_string.0.as_str()) 
+    {
+        return Ok(FullLayerDto{
+            id: id,
+            output_parameters: output_parameters,
+            output_values: output_values,
+            input_parameters: input_parameters,
+            input_values: input_values,
+        });
+    }
+
     Err("Ошибка получения данных".to_string())
 }
 
@@ -461,66 +476,6 @@ fn delete_output_parameter(
     Ok(())
 }
 
-#[tauri::command]
-fn get_output_values(
-    output_parameter_id: i64,
-    input_values_ids : Vec<i64>,
-    connection_string: tauri::State<DbConnection>,
-) -> Result<Vec<OutputValue>, String> {
-    dbcontext::init(connection_string.0.as_str());
-
-    if let Ok(flag) = repositories::output_parameter_repository::exists(
-        output_parameter_id,
-        connection_string.0.as_str(),
-    ) {
-        if !flag {
-            return Err("Выходной параметр не существует".to_string());
-        }
-    } else {
-        return Err("Ошибка получения данных".to_string());
-    }
-
-    for input_value_id in input_values_ids {
-        if let Ok(flag) = repositories::input_value_repository::exists(
-            input_value_id,
-            connection_string.0.as_str(),
-        ) {
-            if !flag {
-                return Err("Входное значение не существует".to_string());
-            }
-        } else {
-            return Err("Ошибка получения данных".to_string());
-        }
-    }
-
-    if let Ok(input_values) =
-        repositories::output_value_repository::get_all(connection_string.0.as_str())
-    {
-        return Ok(input_values
-            .into_iter()
-            .filter(|x| x.output_parameter_id == output_parameter_id)
-            .collect());
-    }
-    Err("Ошибка получения данных".to_string())
-}
-
-#[tauri::command]
-fn create_output_value(
-    output_parameter_id: i64,
-    output_value_dto: CreateOutputValueRequestDto,
-    connection_string: tauri::State<DbConnection>,
-) -> Result<OutputValue, String> {
-    dbcontext::init(connection_string.0.as_str());
-
-    let mut output_value = to_output_value_from_create_dto(output_parameter_id, output_value_dto);
-    if let Err(_) =
-        repositories::output_value_repository::create(&mut output_value, connection_string.0.as_str())
-    {
-        return Err("Ошибка создания".to_string());
-    }
-
-    Ok(output_value)
-}
 
 #[tauri::command]
 fn update_output_value(
@@ -545,20 +500,6 @@ fn update_output_value(
     Err("Ошибка получения данных".to_string())
 }
 
-#[tauri::command]
-fn delete_output_value(
-    output_value_id: i64,
-    connection_string: tauri::State<DbConnection>,
-) -> Result<(), String> {
-    dbcontext::init(connection_string.0.as_str());
-
-    if let Err(_) =
-        repositories::output_value_repository::remove_by_id(output_value_id, connection_string.0.as_str())
-    {
-        return Err("Ошибка удаления".to_string());
-    }
-    Ok(())
-}
 
 fn main() {
     let current_exe_path = env::current_exe().expect("Failed to get current executable path");
@@ -592,10 +533,7 @@ fn main() {
             create_output_parameter,
             update_output_parameter,
             delete_output_parameter,
-            get_output_values,
-            create_output_value,
             update_output_value,
-            delete_output_value,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

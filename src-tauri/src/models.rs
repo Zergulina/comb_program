@@ -37,6 +37,7 @@ pub struct OutputValue {
     pub id: i64,
     pub output_parameter_id: i64,
     pub value: String,
+    pub input_value_ids: String,
 }
 
 #[derive(Clone, Debug, Serialize)]
