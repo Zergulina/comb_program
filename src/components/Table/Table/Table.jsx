@@ -1,9 +1,9 @@
 import React from 'react';
 import TableRow from '../TableRow/TableRow';
 
-const Table = ({tableValues, setValue}) => {
+export const Table = ({tableValues, setValue, className}) => {
     return (
-        <div>
+        <div className={className}>
             {
                 tableValues.map(rowValues => 
                     <TableRow rowValues={rowValues} setValue={setValue}/>
@@ -12,5 +12,3 @@ const Table = ({tableValues, setValue}) => {
         </div>
     );
 };
-
-export default Table;
