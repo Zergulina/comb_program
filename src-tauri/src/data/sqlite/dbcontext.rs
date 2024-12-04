@@ -6,7 +6,7 @@ pub fn init(connection_str: &str) {
     conn.execute(
         "CREATE TABLE IF NOT EXISTS layer (
             id INTEGER PRIMARY KEY,
-            prev_layer_id INTEGER REFERENCES layer(id),
+            prev_layer_id INTEGER REFERENCES layer(id) ON DELETE CASCADE,
             is_final INTEGER NOT NULL,
             name TEXT NOT NULL,
             description TEXT,

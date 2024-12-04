@@ -7,11 +7,10 @@ const outputValuesSlice = createSlice({
     setOutputValues: (_, action) => {
       return action.payload;
     },
-    updateOutputValue: (state, action) => {
-      return state.map((outputValue) => {
-        const outputValueId = action.payload.Id;
-        outputValue.id == outputValueId ? action.payload : outputValue
-      });
+    updateOutputValueById: (state, action) => {
+      return state.map((outputValue) => 
+        outputValue.id == action.payload.id ? action.payload : outputValue
+      );
     },
   },
 });

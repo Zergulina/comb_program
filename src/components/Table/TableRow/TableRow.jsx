@@ -4,7 +4,7 @@ import classes from './TableRow.module.css'
 
 const TableRow = ({rowValues, setValue}) => {
     return (
-        <div>
+        <div className={classes.TableRow}>
             {
                 rowValues.map(value => 
                     <TableCell value={value} setValue={setValue}/>

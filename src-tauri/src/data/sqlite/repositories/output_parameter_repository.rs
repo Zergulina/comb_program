@@ -1,4 +1,4 @@
-use crate::models;
+use crate::models::{self, OutputParameter};
 use rusqlite::{params, Connection, Statement};
 use std::{collections::VecDeque, fmt::format};
 
@@ -25,9 +25,8 @@ pub fn select(stmt: &mut Statement) -> rusqlite::Result<VecDeque<models::OutputP
 
 pub fn get_by_id(id: i64, connection_str: &str) -> rusqlite::Result<models::OutputParameter> {
     let conn = Connection::open(connection_str).unwrap();
-    let mut stmt = conn.prepare(&format!("SELECT * FROM output_parameter WHERE id = {id})"))?;
-    let output_parameters = select(&mut stmt)?;
-    Ok(output_parameters[0].to_owned())
+    let output_parameter = conn.query_row("SELECT id, layer_id, name FROM output_parameter WHERE id = ?", params![&id], |row| Ok(OutputParameter{id: row.get(0)?, layer_id: row.get(1)?, name: row.get(2)?}))?;
+    Ok(output_parameter)
 }
 
 pub fn get_all(connection_str: &str) -> rusqlite::Result<Vec<models::OutputParameter>> {
@@ -44,7 +43,6 @@ pub fn create(
     let mut conn = Connection::open(connection_str).unwrap();
     let transaction = conn.transaction()?;
     let result = {
-
         let mut stmt =
             transaction.prepare("INSERT INTO output_parameter (layer_id, name) VALUES (?, ?)")?;
         stmt.execute(rusqlite::params![
@@ -97,9 +95,8 @@ pub fn create(
     };
 
     fn combinations(v: &Vec<Vec<i64>>) -> Vec<Vec<i64>> {
-        let mut result = vec![]; 
-        let mut current_combination = vec![]; 
-
+        let mut result = vec![];
+        let mut current_combination = vec![];
 
         fn _combinations(
             v: &Vec<Vec<i64>>,
@@ -116,7 +113,7 @@ pub fn create(
             } else {
                 for j in 0..v[i].len() {
                     current_combination.push(v[i][j]);
-                    _combinations(v, current_combination, i + 1, result); 
+                    _combinations(v, current_combination, i + 1, result);
                     current_combination.pop();
                 }
             }
@@ -124,7 +121,7 @@ pub fn create(
 
         _combinations(v, &mut current_combination, 0, &mut result);
 
-        result 
+        result
     }
 
     match result {

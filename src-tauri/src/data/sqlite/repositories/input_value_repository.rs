@@ -91,9 +91,20 @@ pub fn create(input_value: &mut models::InputValue, connection_str: &str) -> rus
             if number_of_input_values == 1 {
                 let mut stmt = transaction
                     .prepare("UPDATE output_value SET input_value_ids = ? WHERE id = ?")?;
-                for (output_value_id, mut input_value_ids, _) in output_values {
-                    input_value_ids += format!("|{}|", new_input_value_id).as_str();
-                    stmt.execute(params![&input_value_ids, &output_value_id])?;
+                for (output_value_id, input_value_ids, _) in output_values {
+                    let mut input_value_ids: Vec<i64> = input_value_ids
+                        .split('|')
+                        .filter(|s| !s.is_empty())
+                        .map(|s| s.parse::<i64>().unwrap())
+                        .collect();
+                    input_value_ids.push(new_input_value_id);
+                    input_value_ids.sort();
+                    let input_value_ids = input_value_ids
+                        .iter()
+                        .map(|n| n.to_string())
+                        .collect::<Vec<String>>()
+                        .join("||");
+                    stmt.execute(params![format!("|{input_value_ids}|"), &output_value_id])?;
                 }
             } else {
                 let mut input_value_id_to_replace: i64 =  transaction.query_row("SELECT input_value.id FROM input_value LEFT JOIN input_parameter ON input_value.input_parameter_id = input_parameter.id WHERE input_parameter.layer_id = ?  AND  input_value.id != ? AND input_parameter.id == ? LIMIT 1", params![&layer_id, &new_input_value_id,  &input_value.input_parameter_id], |row| row.get(0))?;
@@ -108,8 +119,23 @@ pub fn create(input_value: &mut models::InputValue, connection_str: &str) -> rus
                         format!("|{}|", &input_value_id_to_replace).as_str(),
                         format!("|{}|", &new_input_value_id).as_str(),
                     );
+                    let mut input_value_ids: Vec<i64> = input_value_ids
+                        .split('|')
+                        .filter(|s| !s.is_empty())
+                        .map(|s| s.parse::<i64>().unwrap())
+                        .collect();
+                    input_value_ids.sort();
+                    let input_value_ids = input_value_ids
+                        .iter()
+                        .map(|n| n.to_string())
+                        .collect::<Vec<String>>()
+                        .join("||");
                     let mut stmt = transaction.prepare("INSERT INTO output_value (output_parameter_id, input_value_ids, value) VALUES (?, ?, ?)")?;
-                    stmt.execute(params![&output_parameter_id, &input_value_ids, ""])?;
+                    stmt.execute(params![
+                        &output_parameter_id,
+                        format!("|{input_value_ids}|"),
+                        ""
+                    ])?;
                 }
             }
         }

@@ -1,0 +1,22 @@
+.Table {
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 100%;
+    width: calc(100% - 50px);
+}
+
+.Table::-webkit-scrollbar {
+    background-color: var(--button-color);
+    border-radius: 4px;
+    width: 10px;
+    height: 10px;
+}
+
+.Table::-webkit-scrollbar-thumb{
+    background-color: var(--button-focus-shadow-color);
+    border-radius: 4px;
+}
+
+.Table::-webkit-scrollbar-corner {
+    background-color: var(--button-color);
+}

@@ -8,7 +8,7 @@ import classes from './InputValueList.module.css'
 import { updateInputValue } from '../api/InputValue/updateInputValueApi';
 
 const InputValueList = ({ inputParameterId, className }) => {
-    const inputValues = useSelector(state => getInputValuesByInputParameterId(state, inputParameterId));
+    const inputValues = useSelector(getInputValuesByInputParameterId(inputParameterId));
 
     const dispatch = useDispatch();
 

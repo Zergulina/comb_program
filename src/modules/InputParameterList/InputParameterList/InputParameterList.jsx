@@ -12,11 +12,6 @@ const InputParameterList = ({className}) => {
 
     const layerId = useSelector(getPrevLayerId)
 
-    useEffect(() => {
-        getInputParametersByLayerId(layerId, dispatch);
-        return
-    }, [])
-
     return (
         <List className={className}>
             {

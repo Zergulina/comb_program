@@ -11,10 +11,10 @@ const OutputParameterList = ({className}) => {
 
     const layerId = useSelector(getPrevLayerId)
 
-    useEffect(() => {
-        getOutputParametersByLayerId(layerId, dispatch);
-        return
-    }, [])
+    // useEffect(() => {
+    //     getOutputParametersByLayerId(layerId, dispatch);
+    //     return
+    // }, [])
 
     return (
         <List className={className}>
