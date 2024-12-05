@@ -38,6 +38,9 @@ export const buildElementTable = createSelector(
     selectOutputValues,
   ],
   (outputParameters, inputParameters, inputValues, outputValues) => {
+    const validInputParameterIds = new Set();
+    inputValues.forEach(x => validInputParameterIds.add(x.input_parameter_id));
+    inputParameters = inputParameters.filter(x => validInputParameterIds.has(x.id));
     const table = [];
     table.push([
       ...inputParameters.map((x) => {
@@ -49,6 +52,9 @@ export const buildElementTable = createSelector(
         return y;
       }),
     ]);
+    if (inputValues.length == 0) {
+      return table;
+    }
     const inputValuesSortedByParameters = [];
     inputParameters.forEach((x) =>
       inputValuesSortedByParameters.push(
