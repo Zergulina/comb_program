@@ -24,11 +24,11 @@ const LayerElementNav = () => {
     return (
         <div>
             <div className={classes.LayerElementNav}>
-                <NavLink className={({ isActive }) => `${classes.IconContainer} ${isActive ? classes.NavIconActive : ""}`} to="/element/output">
-                    <BsJournalText className={classes.Icon} />
-                </NavLink>
                 <NavLink className={({ isActive }) => `${classes.IconContainer} ${isActive ? classes.NavIconActive : ""}`} to="/element/table">
                     <BsTable className={classes.Icon} />
+                </NavLink>
+                <NavLink className={({ isActive }) => `${classes.IconContainer} ${isActive ? classes.NavIconActive : ""}`} to="/element/output">
+                    <BsJournalText className={classes.Icon} />
                 </NavLink>
                 <NavLink className={({ isActive }) => `${classes.IconContainer} ${isActive ? classes.NavIconActive : ""}`} to="/element/input-parameters">
                     <BsBoxArrowInRight className={classes.Icon} />
@@ -37,7 +37,7 @@ const LayerElementNav = () => {
                     <BsBoxArrowLeft className={classes.Icon} />
                 </NavLink>
                 <div className={`${classes.IconContainer} ${classes.AddButton}`}
-                    style={["/element/input-parameters", "/element/output-parameters"].includes(location.pathname) ? {} : { display: "none" }} 
+                    style={["/element/input-parameters", "/element/output-parameters"].includes(location.pathname) ? {} : { display: "none" }}
                     onClick={location.pathname == "/element/input-parameters" ? createInputParameter : location.pathname == "/element/output-parameters" ? createOutputParameter : null}
                 >
                     <BsPlusCircle className={classes.Icon} />

@@ -1,5 +1,6 @@
 .List {
     overflow-y: auto;
+    height: 100%;
 }
 
 .List::-webkit-scrollbar {

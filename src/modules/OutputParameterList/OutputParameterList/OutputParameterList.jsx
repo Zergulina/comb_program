@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPrevLayerId } from "../../../store/selectors";
 import { getOutputParametersByLayerId } from "../api/getOutputParametersByLayerIdApi";
 import { updateOutputParameter } from "../api/updateOutputParameterApi";
+import classes from './OutputParameterList.module.css'
 
 const OutputParameterList = ({className}) => {
     const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const OutputParameterList = ({className}) => {
         <List className={className}>
             {
                 useSelector(store => store.outputParameters).map(parameter => 
-                    <OutputParameterCard name={parameter.name} id={parameter.id} setName={(newValue) => updateOutputParameter(parameter.id, newValue, layerId, dispatch)} key={parameter.id}/>
+                    <OutputParameterCard name={parameter.name} id={parameter.id} setName={(newValue) => updateOutputParameter(parameter.id, newValue, layerId, dispatch)} className={classes.OutputParameterCard} key={parameter.id}/>
                 )
             }
         </List>

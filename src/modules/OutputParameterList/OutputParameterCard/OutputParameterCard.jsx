@@ -4,11 +4,11 @@ import { deleteOutputParameter } from "../api/deleteOutputParameterApi";
 import { useDispatch } from "react-redux";
 import classes from './OutputParameterCard.module.css'
 
-const OutputParameterCard = ({name, setName, id}) => {
+const OutputParameterCard = ({name, setName, id, className}) => {
     const dispatch = useDispatch();
     
     return (
-        <Card crossOnClick={() => deleteOutputParameter(id, dispatch)}>
+        <Card crossOnClick={() => deleteOutputParameter(id, dispatch)} className={className}>
             <InputText value={name} setValue={setName} className={classes.OutputParameterName} placeholder={"Название выходного параметра"}/>
         </Card>
     );

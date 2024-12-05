@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<OutletPanels />}>
           <Route index element={<LayerSelection />} />
           <Route path="element" element={<LayerElementNav />}>
-            <Route index element={<Navigate replace to="output" />} />
+            <Route index element={<Navigate replace to="table" />} />
             <Route path="output" element={<ElementOutputPage />} />
             <Route path="table" element={<ElementTablePage/>}/>
             <Route path="input-parameters" element={<ElementInputParameters/>}/>

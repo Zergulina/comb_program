@@ -3,7 +3,7 @@ import classes from './DropDown.module.css'
 
 const DropDown = ({placeholder, options, selectedOption, setSelectedOption, className}) => {
     return (
-        <select value={selectedOption} onChange={setSelectedOption} classes={`${classes.DropDown} ${className}`}>
+        <select value={selectedOption} onChange={setSelectedOption} className={`${classes.DropDown} ${className}`}>
             <option value="">{placeholder}</option>
             {
                 options.map((option) => 

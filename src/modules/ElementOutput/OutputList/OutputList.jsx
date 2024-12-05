@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import InputText from '../../../UI/InputText/InputText';
+import List from '../../../components/List/List';
+import TextArea from '../../../UI/TextArea/TextArea';
+import classes from './OutputList.module.css'
 
-const OutputList = ({ inputValueIdsArray }) => {
+const OutputList = ({ inputValueIdsArray, className }) => {
     const [inputValueIds, setInputValueIds] = useState("");
 
     const outputParameters = useSelector(store => store.outputParameters);
@@ -21,15 +24,18 @@ const OutputList = ({ inputValueIdsArray }) => {
     }, [inputValueIdsArray])
 
     return (
-        <div>
+        <List className={className}>
             {
-                outputParameters.map(outputParameter => <div>
-                    <InputText value={outputParameter.name} />
+                outputParameters.map(outputParameter => <div className={classes.OutputListUnit}>
+                    <h3>{outputParameter.name}</h3>
                     <InputText value={inputValueIds != "" ?
-                       outputValues.find(outputValue => outputValue.output_parameter_id == outputParameter.id && outputValue.input_value_ids == inputValueIds).value: ""} />
+                        outputValues.find(outputValue => outputValue.output_parameter_id == outputParameter.id && outputValue.input_value_ids == inputValueIds).value : ""}
+                        isDisabled={true} className ={classes.InputText}
+                    />
                 </div>)
             }
-        </div>
+        </List>
+
     );
 };
 

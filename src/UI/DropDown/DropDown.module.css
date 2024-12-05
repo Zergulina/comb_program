@@ -9,6 +9,7 @@
     min-width: 90px;
     outline: none;
     box-shadow: none;
+    padding: 0 5px;
 }
 
 .DropDown:hover {

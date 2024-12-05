@@ -13,6 +13,7 @@
 
 .Button:hover {
     background-color: var(--button-hover-color);
+    cursor: pointer;
 }
 
 
