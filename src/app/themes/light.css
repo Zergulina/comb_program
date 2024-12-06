@@ -1,13 +1,19 @@
 html[data-theme='light'] {
-    --panel-background-color: #f8f8f8;
-    --panel-border-color: #e5e5e5;
+    --panel-background-color: #f4f4f4;
+    --panel-border-color: #c3c3c3;
     --panel-icon-color: #1f1f1f;
     --panel-icon-unactive-color: #5a5a5a;
 
     --main-background-color: #ffffff;
 
-    --text-color: #3b3b3b;
-    --text-unactive-color: #8e8e90;
+    --text-color: #292929;
+    --text-unactive-color: #545454;
+
+    --button-color: rgb(228, 228, 228);
+    --button-hover-color: rgb(170, 170, 170);
+    --button-focus-shadow-color: rgb(115, 115, 115);
+
+    --table-cell-color: #f4f4f4;
 
     --style-color: blue;
 

@@ -1,5 +1,5 @@
 .TableCell {
-    background-color: var(--button-color);
+    background-color: var( --table-cell-color);
     color: var(--text-color);
     appearance: none;
     font-size: 10px;

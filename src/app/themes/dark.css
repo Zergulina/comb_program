@@ -13,6 +13,8 @@ html[data-theme='dark'] {
     --button-hover-color: rgb(42, 42, 42);
     --button-focus-shadow-color: rgb(69, 69, 69);
 
+    --table-cell-color: rgb(53, 53, 53);
+
     --style-color: green;
 
     --titlebar-icon-color: rgb(211, 211, 211);

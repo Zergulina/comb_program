@@ -63,6 +63,7 @@
   background-color: var(--panel-background-color);
   padding: 6px 0;
   margin: 4px 0;
+  cursor: pointer;
 }
 
 .LeftPanel .IconContainer {
